@@ -1,0 +1,56 @@
+.dashboard {
+    padding: 2rem;
+    color: #e5e7eb;
+  }
+  
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 2rem;
+    color: #f9fafb;
+  }
+  
+  .add-task-btn {
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-task-btn:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .task-summary {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-around;
+  }
+  
+  .task-category {
+    background-color: #374151;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    width: 100px;
+  }
+  
+  .task-category h2 {
+    font-size: 1.2rem;
+    color: #60a5fa;
+    margin-bottom: 0.5rem;
+  }
+  
+  .task-category p {
+    font-size: 1rem;
+    color: #d1d5db;
+  }
+  
