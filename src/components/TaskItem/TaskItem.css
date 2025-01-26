@@ -1,0 +1,75 @@
+.task-item {
+    background-color: #111827;
+    color: #f9fafb;
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .task-item:hover {
+    transform: translateY(-4px);
+  }
+  
+  .task-details {
+    flex: 1;
+  }
+  
+  .task-details h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #93c5fd;
+  }
+  
+  .task-details p {
+    margin: 0.2rem 0;
+  }
+  
+  .due-date {
+    font-size: 0.9rem;
+    color: #9ca3af;
+  }
+  
+  .task-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .delete-btn {
+    background-color: #ef4444;
+  }
+  
+  .edit-btn:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .delete-btn:hover {
+    background-color: #dc2626;
+  }
+ 
+  .task-item.low {
+    border-left: 6px solid #22c55e;
+  }
+  
+  .task-item.medium {
+    border-left: 6px solid #facc15;
+  }
+  
+  .task-item.high {
+    border-left: 6px solid #ef4444;
+  }
+  

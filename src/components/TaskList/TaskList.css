@@ -1,0 +1,24 @@
+.task-list {
+    background-color: #1f2937;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    color: #e5e7eb;
+  }
+  
+  .task-list h2 {
+    margin-bottom: 1rem;
+    color: #93c5fd;
+  }
+  
+  .task-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .task-list p {
+    text-align: center;
+    color: #9ca3af;
+  }
+  
