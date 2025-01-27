@@ -7,6 +7,8 @@ export interface Task {
   status: "todo" | "inProgress" | "done";
 }
 
+export type CreateTaskInput = Omit<Task, "id">;
+
 export interface TaskListProps {
   tasks: Task[];
   onEdit: (taskId: string) => void;
