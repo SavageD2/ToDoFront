@@ -1,48 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskForm from "../TaskForm/TaskForm";
 import TaskList from "../TaskList/TaskList";
+import { fetchTasks, createTask, updateTask, deleteTask } from "../../api/taskApi";
+import { Task } from "../../models/task.models";
 import "./Dashboard.css";
-
-interface Task {
-    id: string;
-    title: string;
-    description: string;
-    priority: string;
-    dueDate: string;
-    status: "todo" | "inProgress" | "done";
-}
 
 const Dashboard: React.FC = () => {
 
-    const [tasks, setTasks] = useState<Task[]>([
-        {
-          id: "1",
-          title: "Acheter du lait",
-          description: "Aller au supermarché pour acheter du lait.",
-          priority: "low",
-          dueDate: "2025-01-30",
-          status: "todo",
-        },
-        {
-          id: "2",
-          title: "Finaliser le rapport",
-          description: "Rédiger et envoyer le rapport au client.",
-          priority: "high",
-          dueDate: "2025-01-25",
-          status: "inProgress",
-        },
-        {
-          id: "3",
-          title: "Nettoyer la maison",
-          description: "Faire le ménage dans le salon et la cuisine.",
-          priority: "medium",
-          dueDate: "2025-01-28",
-          status: "done",
-        },
-      ]);
+    const [tasks, setTasks] = useState<Task[]>([]);
 
     const [showTaskForm, setShowTaskForm] = useState(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(()=>{
+      const loadTasks = async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+          const fetchedTasks = await fetchTasks();
+          setTasks(fetchedTasks);
+        } catch {
+          setError("Une erreur s'est produite lors du chargement des tâches");
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      loadTasks();
+    }, []);
+
 
     const handleAddTask = () => {
       setSelectedTask(null);
@@ -57,28 +44,35 @@ const Dashboard: React.FC = () => {
         }
     };
 
-    const handleSaveTask = (
+    const handleSaveTask = async (
       taskData: Omit<Task, "id" | "status">,
       isEditing: boolean
     ) => {
-      if (isEditing && selectedTask) {
-        setTasks((prev) =>
-        prev.map((task) =>
-          task.id === selectedTask.id? {...task,...taskData } : task
-        ))
-      } else {
-        const newTask: Task = {
-          id: Date.now().toString(),
-          status: "todo",
-          ...taskData,
+      setError(null);
+      try {
+        if (isEditing && selectedTask) {
+          const updatedTask = await updateTask(selectedTask.id, taskData);
+          setTasks((prev) =>
+          prev.map((task) => (task.id === updatedTask.id ? updatedTask : task)));
+        } else {
+          const newTask = await createTask({ ...taskData, status: "todo" });
+          setTasks((prev) => [...prev, newTask]);
         }
-        setTasks((prev) => [...prev, newTask]);
+      } catch {
+        setError("Une erreur s'est produite lors de l'enregistrement de la tâche");
+      } finally {
+        setShowTaskForm(false);
       }
-      setSelectedTask(null);
     };
 
-    const handleDeleteTask = (taskId: string) => {
-        setTasks((prevTasks) => prevTasks.filter((task) => task.id!== taskId));
+    const handleDeleteTask = async (taskId: string) => {
+        setError(null);
+        try {
+          await deleteTask(taskId);
+          setTasks((prev) => prev.filter((task) => task.id !== taskId));
+        } catch {
+          setError("Une erreur s'est produite lors de la suppression de la tâche");
+        }
     };
 
 
@@ -88,6 +82,9 @@ const Dashboard: React.FC = () => {
         <h1>Mon Tableau de Bord</h1>
         <button className="add-task-btn" onClick={handleAddTask}>+ Ajouter une tâche</button>
       </div>
+      {isLoading && <p>Chargement des tâches...</p>}
+      {error && <p className="error-msg">{error}</p>}
+      
       {showTaskForm && (
         <TaskForm task={selectedTask} onSave={handleSaveTask} onClose={() => setShowTaskForm(false)}  />
       )}
