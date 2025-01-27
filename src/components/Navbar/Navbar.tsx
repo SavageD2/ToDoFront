@@ -26,9 +26,9 @@ const Navbar: React.FC = () => {
                     </>
                 ) : (
                     <>
-                        <li>
+                        {/* <li>
                             <Link to="/dashboard">Tableau de bord</Link>
-                        </li>
+                        </li> */}
                         <li>
                             <button onClick={handleLogout}>Déconnexion</button>
                         </li>

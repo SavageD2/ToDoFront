@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_APP_API_URL || "http://localhost:5000/api";
 
 export const login = async (email:string, password:string): Promise<string> => {
-    const response = await axios.post(`${API_URL}/user/login`, {
+    const response = await axios.post(`${API_URL}/users/login`, {
         email,
         password
     });
@@ -13,7 +13,7 @@ export const login = async (email:string, password:string): Promise<string> => {
 };
 
 export const register = async (username: string, email: string, password: string): Promise<void> => {
-    await axios.post(`${API_URL}/user/register`, {
+    await axios.post(`${API_URL}/users/register`, {
         username,
         email,
         password
