@@ -1,6 +1,9 @@
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
+
 const Navbar: React.FC = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
 
@@ -14,23 +17,28 @@ const Navbar: React.FC = () => {
             <div className="navbar-logo">
                 <Link to="/">To-Do App</Link>
             </div>
-            <ul className="navbar-links">
+            <button
+                className="menu-button"
+                onClick={() => setIsMenuOpen((prev) => !prev)}
+            >
+                ☰
+            </button>
+            <ul className={`navbar-links ${isMenuOpen ? "open" : ""}`}>
                 {!token ? (
                     <>
                         <li>
-                            <Link to="/login">Connexion</Link>
+                            <Link to="/login" onClick={() => setIsMenuOpen(false)}>Connexion</Link>
                         </li>
                         <li>
-                            <Link to="/register">Inscription</Link>
+                            <Link to="/register" onClick={() => setIsMenuOpen(false)}>Inscription</Link>
                         </li>
                     </>
                 ) : (
                     <>
-                        {/* <li>
-                            <Link to="/dashboard">Tableau de bord</Link>
-                        </li> */}
                         <li>
-                            <button onClick={handleLogout}>Déconnexion</button>
+                            <button onClick={() => { handleLogout(); setIsMenuOpen(false); }}>
+                                Déconnexion
+                            </button>
                         </li>
                     </>
                 )}

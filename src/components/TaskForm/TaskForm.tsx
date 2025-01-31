@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import "./TaskForm.css";
 import { Task } from "../../models/task.models";
 
+type TaskStatus = "todo" | "inProgress" | "done";
+
 interface TaskFormProps {
   task: Task | null;
-  onSave: (task: Omit<Task, "id" | "status">, isEditing: boolean) => void;
+  onSave: (task: Task, isEditing: boolean) => void;
   onClose: () => void;
 }
 
@@ -13,20 +15,40 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onSave, onClose }) => {
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("medium");
   const [dueDate, setDueDate] = useState("");
+  const [status, setStatus] = useState<TaskStatus>("todo");
 
   useEffect(() => {
     if (task) {
-      setTitle(task.title);
-      setDescription(task.description);
-      setPriority(task.priority);
-      setDueDate(task.dueDate);
+      setTitle(task?.title || "");
+      setDescription(task?.description || "");
+      setPriority(task?.priority || "medium");
+      const formattedDueDate = task?.dueDate ? new Date(task.dueDate).toISOString().split("T")[0] : "";
+      setDueDate(formattedDueDate);
+      setStatus(task?.status || "todo");
+    } else {
+      setTitle("");
+      setDescription("");
+      setPriority("medium");
+      setDueDate("");
+      setStatus("todo");
     }
   }, [task]);
 
+  if (!task && task !== null) return null;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newTask = { title, description, priority, dueDate };
-    onSave(newTask, !!task);
+
+    const updatedTask: Task = {
+      _id: task?._id || "",
+      title,
+      description,
+      priority,
+      dueDate,
+      status,
+    };
+
+    onSave(updatedTask, !!task);
     onClose();
   };
 
@@ -70,11 +92,20 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onSave, onClose }) => {
             onChange={(e) => setDueDate(e.target.value)}
           />
 
+          <label htmlFor="status">Statut</label>
+          <select
+            id="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value as TaskStatus)}
+          >
+            <option value="todo">À Faire</option>
+            <option value="inProgress">En Cours</option>
+            <option value="done">Terminée</option>
+          </select>
+
           <div className="task-form-buttons">
             <button type="submit">{task ? "Enregistrer" : "Ajouter"}</button>
-            <button type="button" onClick={onClose}>
-              Annuler
-            </button>
+            <button type="button" onClick={onClose}>Annuler</button>
           </div>
         </form>
       </div>

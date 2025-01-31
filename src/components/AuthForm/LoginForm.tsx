@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import "./AuthForm.css";
 
 const LoginForm: React.FC = () => {
     const { login } = useAuth();
@@ -31,7 +32,7 @@ const LoginForm: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="form-container" onSubmit={handleSubmit}>
             <label>
                 Email:
                 <input

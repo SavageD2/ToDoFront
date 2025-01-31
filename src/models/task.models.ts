@@ -1,5 +1,5 @@
 export interface Task {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   priority: string;
@@ -7,7 +7,8 @@ export interface Task {
   status: "todo" | "inProgress" | "done";
 }
 
-export type CreateTaskInput = Omit<Task, "id">;
+export type CreateTaskInput = Pick<Task, "title" | "description" | "priority" | "dueDate" | "status">;
+
 
 export interface TaskListProps {
   tasks: Task[];
@@ -15,24 +16,3 @@ export interface TaskListProps {
   onDelete: (taskId: string) => void;
   category: "todo" | "inProgress" | "done";
 }
-
-// export interface TaskFormProps {
-//     isEditing: boolean;
-//     taskToEdit?: {
-//       id: string;
-//       title: string;
-//       description: string;
-//       priority: string;
-//       dueDate: string;
-//       status: string;
-//     };
-//     onSave: (task: {
-//       id?: string;
-//       title: string;
-//       description: string;
-//       priority: string;
-//       dueDate: string;
-//       status: string;
-//     }) => void;
-//     onClose: () => void;
-//   }

@@ -1,13 +1,5 @@
 import "./TaskItem.css";
-
-interface Task {
-  id: string;
-  title: string;
-  description: string;
-  priority: string;
-  dueDate: string;
-  status: "todo" | "inProgress" | "done";
-}
+import { Task } from "../../models/task.models";
 
 interface TaskItemProps {
   task: Task;
@@ -24,10 +16,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete }) => {
         <p className="due-date">À rendre avant : {task.dueDate}</p>
       </div>
       <div className="task-actions">
-        <button className="edit-btn" onClick={() => onEdit(task.id)}>
+        <button className="edit-btn" onClick={() => onEdit(task._id)}>
           ✏️ Modifier
         </button>
-        <button className="delete-btn" onClick={() => onDelete(task.id)}>
+        <button className="delete-btn" onClick={() => onDelete(task._id)}>
           🗑️ Supprimer
         </button>
       </div>
