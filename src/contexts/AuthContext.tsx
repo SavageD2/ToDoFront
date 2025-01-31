@@ -13,17 +13,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(isAuthenticated());
 
     const login = async (email: string, password: string) => {
-        await authLogin(email, password); // Gère la connexion et stocke le token via authService
-        setIsLoggedIn(true); // Met à jour l'état pour indiquer que l'utilisateur est connecté
+        await authLogin(email, password);
+        setIsLoggedIn(true);
     };
 
     const logoutUser = () => {
-        authLogout(); // Supprime le token via authService
-        setIsLoggedIn(false); // Met à jour l'état pour indiquer la déconnexion
+        authLogout();
+        setIsLoggedIn(false);
     };
 
     useEffect(() => {
-        setIsLoggedIn(isAuthenticated()); // Synchronise l'état lors du montage du composant
+        setIsLoggedIn(isAuthenticated());
     }, []);
 
     return (

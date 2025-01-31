@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../services/authService";
+import './AuthForm.css';
 
 const RegisterForm: React.FC = () => {
     const [username, setUsername] = useState("");
@@ -29,7 +30,7 @@ const RegisterForm: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="form-container" onSubmit={handleSubmit}>
             <label>
                 Username:
                 <input

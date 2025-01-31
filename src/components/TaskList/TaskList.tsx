@@ -1,4 +1,3 @@
-import React from "react";
 import TaskItem from "../TaskItem/TaskItem";
 import "./TaskList.css";
 import { Task, TaskListProps } from "../../models/task.models";
@@ -22,9 +21,9 @@ const TaskList: React.FC<TaskListProps> = ({
       </h2>
       {filteredTasks.length > 0 ? (
         <div className="task-items">
-          {filteredTasks.map((task) => (
+          {filteredTasks.map((task, index) => (
             <TaskItem
-              key={task.id}
+              key={task._id || index}
               task={task}
               onEdit={onEdit}
               onDelete={onDelete}
