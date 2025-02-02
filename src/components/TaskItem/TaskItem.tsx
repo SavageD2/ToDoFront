@@ -13,7 +13,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete }) => {
       <div className="task-details">
         <h3>{task.title}</h3>
         <p>{task.description}</p>
-        <p className="due-date">À rendre avant : {task.dueDate}</p>
+        <p className="due-date">À faire avant : {task.dueDate}</p>
       </div>
       <div className="task-actions">
         <button className="edit-btn" onClick={() => onEdit(task._id)}>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Task, CreateTaskInput } from '../models/task.models';
 import { getToken } from '../services/authService';
 
-const API_URL: string = import.meta.env.VITE_APP_API_URL || "http://localhost:5000/api";
+const API_URL: string = import.meta.env.VITE_APP_API_URL;
 
 
 export const fetchTasks = async (): Promise<Task[]> => {

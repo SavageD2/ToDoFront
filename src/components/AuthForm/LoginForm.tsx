@@ -44,7 +44,7 @@ const LoginForm: React.FC = () => {
             </label>
             <br />
             <label>
-                Password:
+                Mot de passe:
                 <input
                     type="password"
                     value={password}

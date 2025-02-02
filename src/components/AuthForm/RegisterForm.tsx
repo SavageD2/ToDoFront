@@ -32,7 +32,7 @@ const RegisterForm: React.FC = () => {
     return (
         <form className="form-container" onSubmit={handleSubmit}>
             <label>
-                Username:
+                Nom d'utilisateur:
                 <input
                     type="text"
                     value={username}
@@ -52,7 +52,7 @@ const RegisterForm: React.FC = () => {
             </label>
             <br />
             <label>
-                Password:
+                Mot de passe:
                 <input
                     type="password"
                     value={password}
@@ -62,7 +62,7 @@ const RegisterForm: React.FC = () => {
             </label>
             <br />
             <label>
-                Confirm Password:
+                Confirmer le mot de passe:
                 <input
                     type="password"
                     value={confirmPassword}
@@ -72,7 +72,7 @@ const RegisterForm: React.FC = () => {
             </label>
             <br />
             {error && <p style={{ color: "red" }}>{error}</p>}
-            <button type="submit">Register</button>
+            <button type="submit">S'inscrire</button>
         </form>
     );
 };

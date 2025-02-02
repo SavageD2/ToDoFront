@@ -34,14 +34,12 @@ const Dashboard: React.FC = () => {
   };
 
  const handleEditTask = (taskId: string) => {
-    console.log("Tâche à modifier ID:", taskId);
     const taskToEdit = tasks.find((task) => task._id === taskId);
     if (taskToEdit) {
-        console.log("Tâche sélectionnée pour modification:", taskToEdit);
         setSelectedTask(taskToEdit);
         setShowTaskForm(true);
     } else {
-        console.error("Aucune tâche trouvée avec l'ID:", taskId);
+        setError("Tâche non trouvée pour l'édition");
     }
 }
 
@@ -50,11 +48,9 @@ const Dashboard: React.FC = () => {
     isEditing: boolean
   ) => {
     setError(null);
-    console.log("Données à sauvegarder:", taskData);
   
     if (isEditing && !selectedTask?._id) {
       setError("L'ID de la tâche est manquant lors de l'édition");
-      console.error("Erreur: L'ID de la tâche est manquant.");
       return;
     }
   
@@ -62,9 +58,7 @@ const Dashboard: React.FC = () => {
       let updatedTask: Task;
   
       if (isEditing && selectedTask && selectedTask._id) {
-        console.log("ID de la tâche à éditer:", selectedTask._id);
         updatedTask = await updateTask(selectedTask._id, taskData);
-        console.log("Tâche mise à jour:", updatedTask);
         setTasks((prev) =>
           prev.map((task) =>
             task._id === updatedTask._id ? updatedTask : task
@@ -73,14 +67,13 @@ const Dashboard: React.FC = () => {
       } else if (!isEditing) {
         const taskWithoutId = { ...taskData };
         updatedTask = await createTask(taskWithoutId);
-        console.log("Nouvelle tâche créée:", updatedTask);
         setTasks((prev) => [...prev, updatedTask]);
       } else {
         throw new Error("L'ID de la tâche est manquant pour la mise à jour");
       }
     } catch (error) {
-      setError("Une erreur s'est produite lors de l'enregistrement de la tâche");
-      console.error("Erreur lors de la sauvegarde:", error);
+      setError("Une erreur s'est produite lors de l'enregistrement de la tâche" + error);
+      
     } finally {
       setShowTaskForm(false);
     }
@@ -93,12 +86,10 @@ const Dashboard: React.FC = () => {
     }
     setError(null);
     try {
-      console.log("Suppression de la tâche ID:", taskId);
       await deleteTask(taskId);
       setTasks((prev) => prev.filter((task) => task._id !== taskId));
     } catch (error) {
-      setError("Une erreur s'est produite lors de la suppression de la tâche");
-      console.error("Erreur lors de la suppression:", error);
+      setError("Une erreur s'est produite lors de la suppression de la tâche" + error);
     }
   };
 
